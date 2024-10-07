@@ -32,5 +32,69 @@ const displayAllCategoriesButton = (categoriesButtonData) => {
   });
 };
 
+// Load all pets
+
+const loadAllPets = async () => {
+  try {
+    const fetchedData = await fetch(
+      "https://openapi.programming-hero.com/api/peddy/pets"
+    );
+
+    const allPetsData = await fetchedData.json();
+    displayAllPets(allPetsData.pets);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Display all pets
+
+const displayAllPets = (allPetsData) => {
+  console.log(allPetsData);
+
+  const petsAllContainer = document.getElementById("all-pets");
+
+  petsAllContainer.innerHTML = "";
+
+  if (allPetsData.length === 0) {
+    petsAllContainer.innerHTML = `
+    <div class=" w-[500px] ml-[500px] mt-40 flex flex-col gap-5 justify-center items-center">
+      <img src="./assets/error-image.webp" />
+
+      <h2 class="text-3xl font-black text-center">
+        No Content Here in This Category{" "}
+      </h2>
+    </div>;
+    `;
+    return;
+  }
+
+  allPetsData.forEach((singlePet) => {
+    console.log(singlePet);
+
+    const singlePetCard = document.createElement("div");
+    singlePetCard.classList =
+      "card lg:w-[300px] w-[380px] h-[380px] lg:ml-16 ml-4 border-2 ";
+
+    singlePetCard.innerHTML = `
+    
+    <figure>
+    <img src = ${singlePet.image} />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">Shoes!</h2>
+    <p>If a dog chews shoes whose shoes does he choose?</p>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary">Buy Now</button>
+    </div>
+  </div>
+
+    `;
+
+    petsAllContainer.append(singlePetCard);
+  });
+};
+
 //  ALl Function Calls
 loadCategoryButton();
+loadAllPets();
