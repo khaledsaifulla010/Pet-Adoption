@@ -113,10 +113,31 @@ const displayAllPets = (allPetsData) => {
       singlePet.price ? singlePet.price + "$" : "Not available"
     }</h1>
     </div>
-    
+    <div class="divider"></div>
+
+
+
+    <div class="flex items-center justify-between">
+
+    <button class="like-btn"><img src="./assets/like-icon.png" /></button>
+    <button class="p-2 text-cyan-700 rounded-lg border-2 font-black">Adopt</button>
+    <button class="p-2 text-cyan-700 rounded-lg border-2 font-black">Details</button>
+
+    </div>
   </div>
 
     `;
+
+    const likeButton = singlePetCard.querySelector(".like-btn");
+    likeButton.addEventListener("click", () => {
+      const petImageContainer = document.getElementById("pet-image");
+
+      const imageElement = document.createElement("img");
+      imageElement.src = singlePet.image;
+      imageElement.classList = " w-[200px] h-[200px] p-4  object-cover mb-4";
+
+      petImageContainer.append(imageElement);
+    });
 
     petsAllContainer.append(singlePetCard);
   });
