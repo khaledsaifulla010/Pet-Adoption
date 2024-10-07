@@ -153,6 +153,20 @@ const displayAllPets = (allPetsData) => {
 
     petsAllContainer.append(singlePetCard);
   });
+
+  // Call adoptModals on button click
+  const setupAdoptButtons = () => {
+    const adoptButtons = document.querySelectorAll(
+      ".p-2.text-cyan-700.rounded-lg"
+    ); // Select all adopt buttons
+
+    adoptButtons.forEach((button) => {
+      button.addEventListener("click", () => adoptModals(button)); // Pass the clicked button
+    });
+  };
+
+  // Call setupAdoptButtons after displaying pets
+  setupAdoptButtons(); // Ensure this is called after your pets are displayed
 };
 
 // Category Wise Pet //
@@ -186,10 +200,42 @@ const loadCategoryWisePet = async (categoryName) => {
   }, 500);
 };
 
-const adoptModals = (singlePet) => {
+// Adopt Modal for Pets
+const adoptModals = (clickedButton) => {
   const adoptModalContainer = document.getElementById("modal-content");
 
-  document.getElementById("showModal").click();
+  // Countdown initial value
+  let countdown = 3;
+
+  // Update the modal content with the countdown
+  const updateModalContent = () => {
+    adoptModalContainer.innerHTML = `
+      <img class="ml-[250px]" src="./assets/handshake-icon.png" />
+      <h1 class="font-black text-center text-4xl">Congrats</h1>
+      <p class="font-black text-center text-xl">Adoption Process is Starting For Your Pet</p>
+      <p class="font-black text-center text-6xl">${countdown}</p>
+    `;
+  };
+
+  // Show the initial modal
+  updateModalContent();
+  document.getElementById("customAdoptModal").showModal();
+
+  // Countdown interval
+  const countdownInterval = setInterval(() => {
+    countdown--; // Decrease countdown
+    updateModalContent(); // Update modal content
+
+    // When countdown reaches 0
+    if (countdown <= 1) {
+      clearInterval(countdownInterval); // Stop the countdown
+
+      // Change the specific adopt button to 'Adopted'
+      clickedButton.innerText = "Adopted"; // Change only the clicked button to 'Adopted'
+      clickedButton.disabled = true; // Optionally disable the button
+      document.getElementById("customAdoptModal").close(); // Optionally close the modal
+    }
+  }, 1000); // 1 second interval
 };
 
 // Load Details Data

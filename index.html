@@ -106,7 +106,7 @@
 
       <div
         id="loadingSpinner"
-        class="loading loading-bars loading-lg hidden lg:ml-[750px] lg:mt-[150px]"
+        class="loading loading-bars loading-lg hidden lg:ml-[750px] ml-[300px] lg:mt-[150px]"
       ></div>
 
       <!-- Display all pets -->
@@ -127,19 +127,23 @@
       </section>
     </main>
 
-    <!-- <button id="showModal" class="btn hidden" onclick="adoptModal.showModal()">
+    <button
+      id="showAdoptModal"
+      class="btn hidden"
+      onclick="customAdoptModal.showModal()"
+    >
       open modal
     </button>
-    <dialog id="adoptModal" class="modal modal-bottom sm:modal-middle">
-      <div class="modal-box">
-        <div id="modal-content "></div>
+    <dialog id="customAdoptModal" class="w-[600px] p-4">
+      <div class="">
+        <div id="modal-content"></div>
         <div class="modal-action">
           <form method="dialog">
-            <button class="btn">Close</button>
+            <button></button>
           </form>
         </div>
       </div>
-    </dialog> -->
+    </dialog>
 
     <!-- Details modals -->
 
