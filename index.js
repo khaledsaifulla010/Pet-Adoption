@@ -128,13 +128,17 @@ const displayAllPets = (allPetsData) => {
     <div class="flex items-center justify-between">
 
     <button class="like-btn"><img src="./assets/like-icon.png" /></button>
-    <button class="p-2 text-cyan-700 rounded-lg border-2 font-black">Adopt</button>
-    <button class="p-2 text-cyan-700 rounded-lg border-2 font-black">Details</button>
+    <button class="p-2 text-cyan-700 rounded-lg border-2 border-[#5daed5] font-black" onclick="adoptModals()">Adopt</button>
+    <button onclick="loadSinglePetDetails(${
+      singlePet.petId
+    })" class="p-2 text-cyan-700 rounded-lg border-2 border-[#5daed5] font-black">Details</button>
 
     </div>
   </div>
 
     `;
+
+    // For like button
 
     const likeButton = singlePetCard.querySelector(".like-btn");
     likeButton.addEventListener("click", () => {
@@ -175,6 +179,99 @@ const loadCategoryWisePet = async (categoryName) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const adoptModals = (singlePet) => {
+  const adoptModalContainer = document.getElementById("modal-content");
+
+  document.getElementById("showModal").click();
+};
+
+// Load Details Data
+
+const loadSinglePetDetails = async (petId) => {
+  console.log(petId);
+
+  const fetchedData = await fetch(
+    `https://openapi.programming-hero.com/api/peddy/pet/${petId}`
+  );
+  const singlePetDetail = await fetchedData.json();
+  displaySinglePetDetails(singlePetDetail.petData);
+};
+
+//  Display Details Data
+
+const displaySinglePetDetails = (singlePetDetail) => {
+  console.log(singlePetDetail);
+
+  const singlePetDetailContainer = document.getElementById("modal-resources");
+
+  singlePetDetailContainer.innerHTML = `
+  
+  <img class="w-full object-cover" src=${singlePetDetail.image} />
+  <h2 class="card-title text-3xl mt-4">${singlePetDetail.pet_name}</h2>
+  <div class="flex items-start justify-between">
+
+  <div>
+   <div class="flex items-center gap-2  mt-3">
+    <img class="w-7" src="./assets/square-dot.png"> 
+    <h1 class="text-xl text-slate-600">Breed: ${
+      singlePetDetail.breed?.length > 0
+        ? singlePetDetail.breed
+        : "Not available"
+    }</h1>
+    </div>
+   <div class="flex items-center gap-2  mt-3">
+    <img class="w-7" src="./assets/gender-icon.png"> 
+    <h1 class="text-xl text-slate-600">Gender: ${
+      singlePetDetail.gender?.length > 0
+        ? singlePetDetail.gender
+        : "Not available"
+    }</h1>
+    </div>
+   <div class="flex items-center gap-2  mt-3">
+    <img class="w-7" src="./assets/gender-icon.png"> 
+    <h1 class="text-xl text-slate-600">Vaccinated Status: ${
+      singlePetDetail.vaccinated_status?.length > 0
+        ? singlePetDetail.vaccinated_status
+        : "Not available"
+    }</h1>
+    </div>
+  
+  </div>
+
+  <div>
+  <div class="flex items-center gap-2  mt-3">
+    <img class="w-5" src="./assets/birth-icon.png"> 
+    <h1 class="text-xl text-slate-600">Birth: ${
+      singlePetDetail.date_of_birth?.length > 0
+        ? singlePetDetail.date_of_birth
+        : "Not available"
+    }</h1>
+    </div>
+
+
+     <div class="flex items-center gap-2  mt-1">
+    <img class="w-5 ml-1 " src="./assets/dolar-icon.png"> 
+    <h1 class="text-xl text-slate-600">Price: ${
+      singlePetDetail.price ? singlePetDetail.price + "$" : "Not available"
+    }</h1>
+    </div>
+   
+  </div>
+  
+  </div>
+ <div class="divider"></div>
+
+ <h1 class="text-2xl font-black">Details Information</h1>
+
+ <p class="text-justify text-slate-500 mt-3">${
+   singlePetDetail.pet_details ? singlePetDetail.pet_details : "Not available"
+ }</p>
+
+  `;
+
+  document.getElementById("customModal").showModal();
 };
 
 //  ALl Function Calls

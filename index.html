@@ -116,6 +116,41 @@
       </section>
     </main>
 
+    <!-- <button id="showModal" class="btn hidden" onclick="adoptModal.showModal()">
+      open modal
+    </button>
+    <dialog id="adoptModal" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <div id="modal-content "></div>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog> -->
+
+    <!-- Details modals -->
+
+    <button id="showModal" class="btn hidden" onclick="customModal.showModal()">
+      open modal
+    </button>
+    <dialog id="customModal" class="w-[600px] p-4">
+      <div class="">
+        <div id="modal-resources"></div>
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button
+              class="btn border-[#5daed5] bg-[#e0f3f8] font-black text-cyan-700 text-lg"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
     <footer
       class="bg-black lg:w-full w-[640px] lg:h-[360px] lg:p-20 p-6 flex justify-between"
     >
