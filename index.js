@@ -158,27 +158,32 @@ const displayAllPets = (allPetsData) => {
 // Category Wise Pet //
 
 const loadCategoryWisePet = async (categoryName) => {
-  try {
-    const fetchedData = await fetch(
-      `https://openapi.programming-hero.com/api/peddy/category/${categoryName}`
-    );
+  const spinner = document.getElementById("loadingSpinner");
+  spinner.classList.remove("hidden");
+  setTimeout(async () => {
+    try {
+      const fetchedData = await fetch(
+        `https://openapi.programming-hero.com/api/peddy/category/${categoryName}`
+      );
 
-    const categoryWiseData = await fetchedData.json();
-    const activeBtn = document.getElementById(`btn-${categoryName}`);
-    const allButtons = document.querySelectorAll("button");
-    allButtons.forEach((btn) => {
-      btn.classList.remove("active");
-    });
+      const categoryWiseData = await fetchedData.json();
+      const activeBtn = document.getElementById(`btn-${categoryName}`);
+      const allButtons = document.querySelectorAll("button");
+      allButtons.forEach((btn) => {
+        btn.classList.remove("active");
+      });
 
-    // Add active class to the clicked button
-    activeBtn.classList.add("active");
+      activeBtn.classList.add("active");
 
-    console.log(activeBtn);
-    console.log(categoryWiseData);
-    displayAllPets(categoryWiseData.data);
-  } catch (error) {
-    console.log(error);
-  }
+      console.log(activeBtn);
+      console.log(categoryWiseData);
+      displayAllPets(categoryWiseData.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      spinner.classList.add("hidden");
+    }
+  }, 500);
 };
 
 const adoptModals = (singlePet) => {
