@@ -270,8 +270,31 @@ const displaySinglePetDetails = (singlePetDetail) => {
  }</p>
 
   `;
-
   document.getElementById("customModal").showModal();
+};
+
+// Sort By Price
+
+document.getElementById("sortPriceBtn").addEventListener("click", () => {
+  loadAndSortPetsByPrice();
+});
+
+const loadAndSortPetsByPrice = async () => {
+  try {
+    const fetchedData = await fetch(
+      "https://openapi.programming-hero.com/api/peddy/pets"
+    );
+    const allPetsData = await fetchedData.json();
+    allPetsData.pets.sort((a, b) => {
+      const priceA = a.price ? parseFloat(a.price) : 0;
+      const priceB = b.price ? parseFloat(b.price) : 0;
+      return priceA - priceB;
+    });
+
+    displayAllPets(allPetsData.pets);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //  ALl Function Calls
