@@ -27,7 +27,7 @@ const displayAllCategoriesButton = (categoriesButtonData) => {
     const categoryButton = document.createElement("button");
     categoryButton.id = `btn-${singleCategoryButton.category}`;
     categoryButton.className =
-      "btn font-black lg:text-2xl h-16 lg:w-48 text-xl category-btn rounded-lg border-2";
+      "btn font-black lg:text-2xl h-16 lg:w-48 text-xl category-btn  border-2";
     categoryButton.innerHTML = `<img class="w-10 lg:w-12" src="${singleCategoryButton.category_icon}" />
     ${singleCategoryButton.category}`;
 
@@ -153,13 +153,23 @@ const displayAllPets = (allPetsData) => {
 
 // Category Wise Pet //
 
-const loadCategoryWisePet = async (category) => {
+const loadCategoryWisePet = async (categoryName) => {
   try {
     const fetchedData = await fetch(
-      `https://openapi.programming-hero.com/api/peddy/category/${category}`
+      `https://openapi.programming-hero.com/api/peddy/category/${categoryName}`
     );
 
     const categoryWiseData = await fetchedData.json();
+    const activeBtn = document.getElementById(`btn-${categoryName}`);
+    const allButtons = document.querySelectorAll("button");
+    allButtons.forEach((btn) => {
+      btn.classList.remove("active");
+    });
+
+    // Add active class to the clicked button
+    activeBtn.classList.add("active");
+
+    console.log(activeBtn);
     console.log(categoryWiseData);
     displayAllPets(categoryWiseData.data);
   } catch (error) {
