@@ -74,19 +74,46 @@ const displayAllPets = (allPetsData) => {
 
     const singlePetCard = document.createElement("div");
     singlePetCard.classList =
-      "card lg:w-[300px] w-[380px] h-[380px] lg:ml-16 ml-4 border-2 ";
+      "card lg:w-[310px] w-[380px] h-[400px] lg:ml-6 ml-4 border-2 ";
 
     singlePetCard.innerHTML = `
     
     <figure>
     <img src = ${singlePet.image} />
   </figure>
-  <div class="card-body">
-    <h2 class="card-title">Shoes!</h2>
-    <p>If a dog chews shoes whose shoes does he choose?</p>
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary">Buy Now</button>
+  <div class="p-4">
+    <h2 class="card-title text-3xl ">${singlePet.pet_name}</h2>
+
+    
+    <div class="flex items-center gap-2  mt-3">
+    <img class="w-7" src="./assets/square-dot.png"> 
+    <h1 class="text-xl text-slate-600">Breed: ${
+      singlePet.breed?.length > 0 ? singlePet.breed : "Not available"
+    }</h1>
     </div>
+
+
+    <div class="flex items-center gap-2  mt-1">
+    <img class="w-5 ml-1" src="./assets/birth-icon.png"> 
+    <h1 class="text-xl text-slate-600">Birth: ${
+      singlePet.date_of_birth?.length > 0
+        ? singlePet.date_of_birth
+        : "Not available"
+    }</h1>
+    </div>
+    <div class="flex items-center gap-2  mt-1">
+    <img class="w-7 " src="./assets/gender-icon.png"> 
+    <h1 class="text-xl text-slate-600">Gender: ${
+      singlePet.gender?.length > 0 ? singlePet.gender : "Not available"
+    }</h1>
+    </div>
+    <div class="flex items-center gap-2  mt-1">
+    <img class="w-5 ml-1 " src="./assets/dolar-icon.png"> 
+    <h1 class="text-xl text-slate-600">Price: ${
+      singlePet.price ? singlePet.price + "$" : "Not available"
+    }</h1>
+    </div>
+    
   </div>
 
     `;
