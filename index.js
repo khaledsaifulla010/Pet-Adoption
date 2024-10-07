@@ -1,6 +1,5 @@
-console.log("Added");
 
-// Load all categories button //
+// --------------------------Load all categories button (1) //--------------------------------
 
 const loadCategoryButton = async () => {
   try {
@@ -14,7 +13,10 @@ const loadCategoryButton = async () => {
   }
 };
 
-// Display all Categories button for Display all categories videos (2)
+
+// -------------Display all Categories button for Display all categories Pets (2)-------------
+
+
 const displayAllCategoriesButton = (categoriesButtonData) => {
   const categoriesContainer = document.getElementById("categoriesContainer");
   console.log(categoriesButtonData);
@@ -40,7 +42,7 @@ const displayAllCategoriesButton = (categoriesButtonData) => {
   });
 };
 
-// Load all pets
+// ---------------------------------Load All Pets (3)-----------------------------------------
 
 const loadAllPets = async () => {
   try {
@@ -55,7 +57,8 @@ const loadAllPets = async () => {
   }
 };
 
-// Display all pets
+
+// ------------------------------------Display All Pets (4)-----------------------------------
 
 const displayAllPets = (allPetsData) => {
   console.log(allPetsData);
@@ -79,28 +82,22 @@ const displayAllPets = (allPetsData) => {
 
   allPetsData.forEach((singlePet) => {
     console.log(singlePet);
-
     const singlePetCard = document.createElement("div");
     singlePetCard.classList =
       "card lg:w-[310px] w-[380px]  h-[500px] lg:ml-6 ml-4 border-2 ";
 
     singlePetCard.innerHTML = `
-    
     <figure>
     <img class="object-cover w-full" src = ${singlePet.image} />
   </figure>
   <div class="p-4">
     <h2 class="card-title text-3xl ">${singlePet.pet_name}</h2>
-
-    
     <div class="flex items-center gap-2  mt-3">
     <img class="w-7" src="./assets/square-dot.png"> 
     <h1 class="text-xl text-slate-600">Breed: ${
       singlePet.breed?.length > 0 ? singlePet.breed : "Not available"
     }</h1>
     </div>
-
-
     <div class="flex items-center gap-2  mt-1">
     <img class="w-5 ml-1" src="./assets/birth-icon.png"> 
     <h1 class="text-xl text-slate-600">Birth: ${
@@ -122,23 +119,17 @@ const displayAllPets = (allPetsData) => {
     }</h1>
     </div>
     <div class="divider"></div>
-
-
-
     <div class="flex items-center justify-between">
-
     <button class="like-btn"><img src="./assets/like-icon.png" /></button>
     <button class="p-2 text-cyan-700 rounded-lg border-2 border-[#5daed5] font-black" onclick="adoptModals()">Adopt</button>
     <button onclick="loadSinglePetDetails(${
       singlePet.petId
     })" class="p-2 text-cyan-700 rounded-lg border-2 border-[#5daed5] font-black">Details</button>
-
     </div>
   </div>
-
     `;
 
-    // For like button
+    // --------------------------------For like Button (5)------------------------------------
 
     const likeButton = singlePetCard.querySelector(".like-btn");
     likeButton.addEventListener("click", () => {
@@ -150,26 +141,20 @@ const displayAllPets = (allPetsData) => {
 
       petImageContainer.append(imageElement);
     });
-
+    
+ // -----------------------Call adoptModals on button click (6)-------------------------------
+    
+    const adoptButton = singlePetCard.querySelector(
+      ".p-2.text-cyan-700.rounded-lg"
+    );
+    adoptButton.addEventListener("click", () => adoptModals(adoptButton));
     petsAllContainer.append(singlePetCard);
   });
-
-  // Call adoptModals on button click
-  const setupAdoptButtons = () => {
-    const adoptButtons = document.querySelectorAll(
-      ".p-2.text-cyan-700.rounded-lg"
-    ); // Select all adopt buttons
-
-    adoptButtons.forEach((button) => {
-      button.addEventListener("click", () => adoptModals(button)); // Pass the clicked button
-    });
-  };
-
-  // Call setupAdoptButtons after displaying pets
-  setupAdoptButtons(); // Ensure this is called after your pets are displayed
 };
 
-// Category Wise Pet //
+
+// -----------------------------Category Wise Pet (7)-----------------------------------------
+
 
 const loadCategoryWisePet = async (categoryName) => {
   const spinner = document.getElementById("loadingSpinner");
@@ -200,14 +185,15 @@ const loadCategoryWisePet = async (categoryName) => {
   }, 500);
 };
 
-// Adopt Modal for Pets
+
+// ----------------------------Adopt Modal for Pets (8)---------------------------------------
+
+
 const adoptModals = (clickedButton) => {
   const adoptModalContainer = document.getElementById("modal-content");
 
-  // Countdown initial value
   let countdown = 3;
 
-  // Update the modal content with the countdown
   const updateModalContent = () => {
     adoptModalContainer.innerHTML = `
       <img class="ml-[250px]" src="./assets/handshake-icon.png" />
@@ -217,28 +203,34 @@ const adoptModals = (clickedButton) => {
     `;
   };
 
-  // Show the initial modal
   updateModalContent();
   document.getElementById("customAdoptModal").showModal();
 
-  // Countdown interval
   const countdownInterval = setInterval(() => {
-    countdown--; // Decrease countdown
-    updateModalContent(); // Update modal content
+    countdown--; 
+    updateModalContent(); 
 
-    // When countdown reaches 0
     if (countdown <= 1) {
-      clearInterval(countdownInterval); // Stop the countdown
-
-      // Change the specific adopt button to 'Adopted'
-      clickedButton.innerText = "Adopted"; // Change only the clicked button to 'Adopted'
-      clickedButton.disabled = true; // Optionally disable the button
-      document.getElementById("customAdoptModal").close(); // Optionally close the modal
+      clearInterval(countdownInterval); 
+      clickedButton.innerText = "Adopted"; 
+      clickedButton.disabled = true; 
+      document.getElementById("customAdoptModal").close();
     }
-  }, 1000); // 1 second interval
+  }, 1000);
+   
 };
+const setupAdoptButtons = () => {
+  const adoptButtons = document.querySelectorAll(
+    ".p-2.text-cyan-700.rounded-lg"
+  );
 
-// Load Details Data
+  adoptButtons.forEach((button) => {
+    button.addEventListener("click", () => adoptModals(button)); 
+  });
+};
+setupAdoptButtons();
+
+// ---------------------------------Load Details Data (9)-------------------------------------
 
 const loadSinglePetDetails = async (petId) => {
   console.log(petId);
@@ -250,19 +242,16 @@ const loadSinglePetDetails = async (petId) => {
   displaySinglePetDetails(singlePetDetail.petData);
 };
 
-//  Display Details Data
+
+// ------------------------------------Display Details Data (10)------------------------------
 
 const displaySinglePetDetails = (singlePetDetail) => {
   console.log(singlePetDetail);
-
   const singlePetDetailContainer = document.getElementById("modal-resources");
-
   singlePetDetailContainer.innerHTML = `
-  
   <img class="w-full object-cover" src=${singlePetDetail.image} />
   <h2 class="card-title text-3xl mt-4">${singlePetDetail.pet_name}</h2>
   <div class="flex items-start justify-between">
-
   <div>
    <div class="flex items-center gap-2  mt-3">
     <img class="w-7" src="./assets/square-dot.png"> 
@@ -288,9 +277,7 @@ const displaySinglePetDetails = (singlePetDetail) => {
         : "Not available"
     }</h1>
     </div>
-  
   </div>
-
   <div>
   <div class="flex items-center gap-2  mt-3">
     <img class="w-5" src="./assets/birth-icon.png"> 
@@ -300,31 +287,24 @@ const displaySinglePetDetails = (singlePetDetail) => {
         : "Not available"
     }</h1>
     </div>
-
-
      <div class="flex items-center gap-2  mt-1">
     <img class="w-5 ml-1 " src="./assets/dolar-icon.png"> 
     <h1 class="text-xl text-slate-600">Price: ${
       singlePetDetail.price ? singlePetDetail.price + "$" : "Not available"
     }</h1>
     </div>
-   
   </div>
-  
   </div>
  <div class="divider"></div>
-
  <h1 class="text-2xl font-black">Details Information</h1>
-
  <p class="text-justify text-slate-500 mt-3">${
    singlePetDetail.pet_details ? singlePetDetail.pet_details : "Not available"
  }</p>
-
   `;
   document.getElementById("customModal").showModal();
 };
 
-// Sort By Price
+// -------------------------------Sort By Price (11)------------------------------------------
 
 document.getElementById("sortPriceBtn").addEventListener("click", () => {
   loadAndSortPetsByPrice();
@@ -348,6 +328,6 @@ const loadAndSortPetsByPrice = async () => {
   }
 };
 
-//  ALl Function Calls
+// ---------------------------------All Function Calls (12)-----------------------------------
 loadCategoryButton();
 loadAllPets();
