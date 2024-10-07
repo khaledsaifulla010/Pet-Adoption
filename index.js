@@ -15,7 +15,6 @@ const loadCategoryButton = async () => {
 };
 
 // Display all Categories button for Display all categories videos (2)
-
 const displayAllCategoriesButton = (categoriesButtonData) => {
   const categoriesContainer = document.getElementById("categoriesContainer");
   console.log(categoriesButtonData);
@@ -24,10 +23,19 @@ const displayAllCategoriesButton = (categoriesButtonData) => {
     console.log(singleCategoryButton);
 
     const categoriesButtonContainer = document.createElement("div");
-    categoriesButtonContainer.innerHTML = `
-<button id="btn-${singleCategoryButton}" onclick="loadCategoryVideos(${singleCategoryButton})" class="btn font-black lg:text-2xl h-16 lg:w-48 text-xl category-btn rounded-lg border-2"><img class="w-10 lg:w-12" src="${singleCategoryButton.category_icon}" />
- ${singleCategoryButton.category}</button>
-`;
+
+    const categoryButton = document.createElement("button");
+    categoryButton.id = `btn-${singleCategoryButton.category}`;
+    categoryButton.className =
+      "btn font-black lg:text-2xl h-16 lg:w-48 text-xl category-btn rounded-lg border-2";
+    categoryButton.innerHTML = `<img class="w-10 lg:w-12" src="${singleCategoryButton.category_icon}" />
+    ${singleCategoryButton.category}`;
+
+    categoryButton.addEventListener("click", () => {
+      loadCategoryWisePet(singleCategoryButton.category);
+    });
+
+    categoriesButtonContainer.append(categoryButton);
     categoriesContainer.append(categoriesButtonContainer);
   });
 };
@@ -58,11 +66,11 @@ const displayAllPets = (allPetsData) => {
 
   if (allPetsData.length === 0) {
     petsAllContainer.innerHTML = `
-    <div class=" w-[500px] ml-[500px] mt-40 flex flex-col gap-5 justify-center items-center">
+    <div class=" lg:w-[600px] w-[400px] lg:ml-[400px] ml-[130px] mt-24 mb-12 flex flex-col gap-5 justify-center items-center">
       <img src="./assets/error-image.webp" />
 
       <h2 class="text-3xl font-black text-center">
-        No Content Here in This Category{" "}
+        No Information Available
       </h2>
     </div>;
     `;
@@ -74,12 +82,12 @@ const displayAllPets = (allPetsData) => {
 
     const singlePetCard = document.createElement("div");
     singlePetCard.classList =
-      "card lg:w-[310px] w-[380px] h-[400px] lg:ml-6 ml-4 border-2 ";
+      "card lg:w-[310px] w-[380px]  h-[500px] lg:ml-6 ml-4 border-2 ";
 
     singlePetCard.innerHTML = `
     
     <figure>
-    <img src = ${singlePet.image} />
+    <img class="object-cover w-full" src = ${singlePet.image} />
   </figure>
   <div class="p-4">
     <h2 class="card-title text-3xl ">${singlePet.pet_name}</h2>
@@ -141,6 +149,22 @@ const displayAllPets = (allPetsData) => {
 
     petsAllContainer.append(singlePetCard);
   });
+};
+
+// Category Wise Pet //
+
+const loadCategoryWisePet = async (category) => {
+  try {
+    const fetchedData = await fetch(
+      `https://openapi.programming-hero.com/api/peddy/category/${category}`
+    );
+
+    const categoryWiseData = await fetchedData.json();
+    console.log(categoryWiseData);
+    displayAllPets(categoryWiseData.data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //  ALl Function Calls
